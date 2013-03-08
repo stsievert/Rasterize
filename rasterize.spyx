@@ -1,0 +1,58 @@
+#from __future__ import division
+from PIL import Image
+import numpy as np
+cimport numpy as np
+from numpy import *
+
+def main():
+    file = r'len_std.jpg'
+    pix = np.array(Image.open(file))
+    bw = np.mean(pix, axis=2)
+    # bw is now the image in black and white
+    cdef x, y
+    
+    new = np.zeros((100*bw.shape[0], 100*bw.shape[1]))
+    cdef int w = bw.shape[0]
+    cdef int l = bw.shape[1]
+
+    # each pixel's "color" = radius
+    # we use 100*shape to get an approximation of a ball
+
+    for x from 0 < x < w:
+        for y from 0 < y < l:
+            new[100*y:100*y+100, 100*x:100*x+100] = makecircle2(new[100*y:100*y+100,
+                100*x:100*x+100], bw[y,x])
+    return new
+
+cdef makecircle2(pixels, radius):
+    """ assumes pixels is a 100x100 array. makes a circle of radius """
+    cdef np.ndarray x, y
+    x = np.arange(-pixels.shape[0]//2, pixels.shape[0]//2)
+    y = np.arange(-pixels.shape[1]//2, pixels.shape[1]//2)
+    x, y = np.meshgrid(x, y)
+    circle = np.zeros((len(y), len(x)))
+    i = radius < np.sqrt(np.power(x, 2) + np.power(y, 2))
+    circle[i] = 255
+    return circle
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
