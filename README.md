@@ -3,11 +3,16 @@ project. This code is stored as an iPython notebook. It is viewable [here][1].
 
 It is recommended that you install NumPy, Matplotlib and PIL so you can actually
 edit the files. To do that, look at this [Python installation guide.][2]
-Enthought is free for academia users, and the SciPy SuperPack also works (though
-I'm not sure if PIL is included in this).
+Enthought is free for academia users, and the SciPy SuperPack also works. You
+can also run `sudo pip install numpy PIL matplotlib pudb`.
 
-Also, if you're actually using the script, `main()` returns an image. Use
-`main().show()` to view the image.
+If you're actually using the Python script, it returns an array, but shows the
+image in the meantime (using your default image viewer).
 
-[1]:http://nbviewer.ipython.org/5119727
+The program follows the same layout as Matt's simulatic program. The usage is
+`python rasterize.py IMAGE -w WIDTH -t HEIGHT -c NUMBER OF SIZES`. Note that it
+only works for perfectly square images right now, but the width and height can
+not be square.
+
+[1]:http://nbviewer.ipython.org/5143813
 [2]:http://scipy.github.com/download.html

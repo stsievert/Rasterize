@@ -1,13 +1,44 @@
+#!/usr/bin/python
 from __future__ import division
 from PIL import Image
 import numpy as np
 import pudb as pdb
 from numpy import *
 import matplotlib.pyplot as plt
+import argparse
 
 def main():
-    COLORS = 12
-    FILE = 'len_std.jpg'
+    # parse the commands, etc. stolen from Matt's code
+    PARSER = argparse.ArgumentParser(description='Convert an image to a new ' + 
+                                                 'size and color fidelity.')
+    PARSER.add_argument('image', help='The image to be converted.')
+    PARSER.add_argument('-c', '--colors', type=int,
+                        help='Number of colors to use in converting the ' + 
+                             ' image.')
+    PARSER.add_argument('-w', '--width', type=int,
+                        help='Width of the output image, in pixels. Default 300')
+    PARSER.add_argument('-t', '--height', type=int,
+                        help='Height of the output image, in pixels. Default 300')
+
+    ARGS = PARSER.parse_args()
+    FILE = ARGS.image
+
+    if ARGS.width != None:
+        width = ARGS.width
+    else:
+        width = 300
+    if ARGS.height != None:
+        height = ARGS.height
+    else:
+        height = 300
+    if ARGS.colors != None:
+        COLORS = ARGS.colors
+    else:
+        COLORS = 15
+
+    im = Image.open(FILE)
+    im = im.resize((width, height), Image.ANTIALIAS)
+
     # the above two elements are arguments you can change if you want.
 
     pix = np.array(Image.open(FILE))
@@ -22,14 +53,13 @@ def main():
     bw = make_into_circles(bw, COLORS)
 
     im = Image.fromarray(bw)
-    im.show()
-    return bw
+    return im.show()
 
 def make_into_circles(bw, COLORS):
     # each pixel's "color" = radius
     # we use 100*shape to get an approximation of a ball
     N = int(np.round(2 * bw.max() / 16))
-    print N
+    #print N
     w, l = bw.shape
     i = np.arange(0, w)
     j = np.arange(0, l)
@@ -48,8 +78,8 @@ def make_into_circles(bw, COLORS):
     return new
 
 def rasterize(array, sizes):
-    print array.max()
-    pdb.set_trace()
+    #print array.max()
+    #pdb.set_trace()
 
     for y in range(0,array.shape[0]-1):
         for x in range(0, array.shape[1]-1):
@@ -103,75 +133,8 @@ def makecircle2(pixels, radius):
     
     return circle
 
-
-
-
-def matplotlib_rast_demo():
-    """ from http://matplotlib.org/examples/misc/rasterization_demo.html"""
-
-    d = np.arange(100).reshape(10, 10)
-    x, y = np.meshgrid(np.arange(11), np.arange(11))
-
-    theta = 0.25*np.pi
-    xx = x*np.cos(theta) - y*np.sin(theta)
-    yy = x*np.sin(theta) + y*np.cos(theta)
-
-    ax1 = plt.subplot(221)
-    ax1.set_aspect(1)
-    ax1.pcolormesh(xx, yy, d)
-    ax1.set_title("No Rasterization")
-
-    ax2 = plt.subplot(222)
-    ax2.set_aspect(1)
-    ax2.set_title("Rasterization")
-
-    m = ax2.pcolormesh(xx, yy, d)
-    m.set_rasterized(True)
-
-    ax3 = plt.subplot(223)
-    ax3.set_aspect(1)
-    ax3.pcolormesh(xx, yy, d)
-    ax3.text(0.5, 0.5, "Text", alpha=0.2,
-             va="center", ha="center", size=50, transform=ax3.transAxes)
-
-    ax3.set_title("No Rasterization")
-
-
-    ax4 = plt.subplot(224)
-    ax4.set_aspect(1)
-    m = ax4.pcolormesh(xx, yy, d)
-    m.set_zorder(-20)
-
-    ax4.text(0.5, 0.5, "Text", alpha=0.2,
-             zorder=-15,
-             va="center", ha="center", size=50, transform=ax4.transAxes)
-
-    ax4.set_rasterization_zorder(-10)
-
-    ax4.set_title("Rasterization z$<-10$")
-
-
-    # ax2.title.set_rasterized(True) # should display a warning
-
-    plt.savefig("test_rasterization.pdf", dpi=150)
-    plt.savefig("test_rasterization.eps", dpi=150)
-
-    if not plt.rcParams["text.usetex"]:
-        plt.savefig("test_rasterization.svg", dpi=150)
-        # svg backend currently ignores the dpi
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    main()
 
 
 
