@@ -11,8 +11,8 @@ image in the meantime (using your default image viewer).
 
 The program follows the same layout as Matt's simulatic program. The usage is
 `python rasterize.py IMAGE -w WIDTH -t HEIGHT -c NUMBER OF SIZES`. Note that it
-only works for perfectly square images right now, but the width and height can
-not be square.
+only works for perfectly square images right now. This means that the base image
+has to be square, not the width and height.
 
 [1]:http://nbviewer.ipython.org/5143813
 [2]:http://scipy.github.com/download.html
