@@ -14,5 +14,5 @@ The program follows the same layout as Matt's simulatic program. The usage is
 only works for perfectly square images right now. This means that the base image
 has to be square, not the width and height.
 
-[1]:http://nbviewer.ipython.org/5143813
+[1]:http://nbviewer.ipython.org/5144106
 [2]:http://scipy.github.com/download.html
