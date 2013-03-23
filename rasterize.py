@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import argparse
 
 def main():
-    # parse the commands, etc. stolen from Matt's code
+    #parse the commands, etc. stolen from Matt's code
     PARSER = argparse.ArgumentParser(description='Convert an image to a new ' + 
                                                  'size and color fidelity.')
     PARSER.add_argument('image', help='The image to be converted.')
@@ -35,6 +35,8 @@ def main():
         COLORS = ARGS.colors
     else:
         COLORS = 15
+
+    width = 300; height = 300; COLORS = 15; FILE = 'len_std.jpg'
 
     im = Image.open(FILE)
     im = im.resize((width, height), Image.ANTIALIAS)
