@@ -51,7 +51,7 @@ def simulatic(array, sizes):
         
 
     # add the first NUMCOLORS colors from COLORS to PALETTE
-    NUMCOLORS = 4
+    NUMCOLORS = sizes
     for colornum in range(NUMCOLORS):
         try:
             PALETTE += COLORS.pop(0)
@@ -180,9 +180,9 @@ colors = [
 #FILE, width, height, COLORS = parse_args()
 
 # change as you need to
-FILE = 'lenna-300x300.png'
+FILE = 'mountain.jpg'
 #width, height = (300, 300)
-COLORS = 4
+COLORS = 5
 
 
 
@@ -192,7 +192,7 @@ mul = 24
 ar = imread(FILE)
 
 # it's the original image in 4 colors now (as an image)
-sim = simulatic(ar, 4)
+sim = simulatic(ar, COLORS)
 
 # and now as an array
 arr = array(sim)
@@ -208,6 +208,7 @@ for i in range(w):
             new[mul*i:mul*i+mul, mul*j:mul*j+mul], 
             array(colors[arr[i,j]])/255)
 
+clf()
 outfile = FILE.partition('.')[0]
 ax = figure()
 imshow(new)
